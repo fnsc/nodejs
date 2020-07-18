@@ -23,7 +23,22 @@ const server = http.createServer((request, response) => {
         return response.end();
     }
     if (url === "/message" && method === "POST") {
-        fileSystem.writeFileSync("message.txt", "DUMMY text from section 3");
+        const body = [];
+
+        request.on("data", (chunk) => {
+            console.log(chunk);
+            body.push(chunk);
+        });
+
+        request.on("end", () => {
+            const parsedBody = Buffer.concat(body).toString();
+            const message = parsedBody.split("=")[1];
+            fileSystem.writeFileSync(
+                "message.txt",
+                `DUMMY text from section 3 => ${message}`
+            );
+        });
+
         response.statusCode = 302;
         response.setHeader("Location", "/");
         return response.end();
