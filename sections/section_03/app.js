@@ -1,8 +1,10 @@
 const http = require("http");
-const server = http.createServer((request, response) => {
-    console.log(request.url, request.method, request.headers);
+const fileSystem = require("fs");
 
+const server = http.createServer((request, response) => {
     const url = request.url;
+    const method = request.method;
+
     if (url === "/") {
         response.setHeader("Content-Type", "text/html");
         response.write(
@@ -18,6 +20,12 @@ const server = http.createServer((request, response) => {
             </body>
             </html>`
         );
+        return response.end();
+    }
+    if (url === "/message" && method === "POST") {
+        fileSystem.writeFileSync("message.txt", "DUMMY text from section 3");
+        response.statusCode = 302;
+        response.setHeader("Location", "/");
         return response.end();
     }
     /**
