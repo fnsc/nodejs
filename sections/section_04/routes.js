@@ -26,7 +26,6 @@ const requestHandler = (request, response) => {
         const body = [];
 
         request.on("data", (chunk) => {
-            console.log(chunk);
             body.push(chunk);
         });
 
