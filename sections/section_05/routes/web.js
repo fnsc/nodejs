@@ -8,18 +8,19 @@ router.get("/", (request, response, next) => {
 });
 
 // Products
-router.get("/add-product", (request, response, next) => {
-    response.send(`
-        <form action="/product" method="POST">
-            <input type="text" name="title">
-            <button type="submit">Add Product</button>
-        </form>
-    `);
-});
-
-router.post("/product", (request, response) => {
-    console.log(request.body);
-    response.redirect("/");
-});
+router
+    .route("/admin/products")
+    .get((request, response, next) => {
+        response.send(`
+            <form action="/admin/products" method="POST">
+                <input type="text" name="title">
+                <button type="submit">Add Product</button>
+            </form>
+        `);
+    })
+    .post((request, response) => {
+        console.log(request.body);
+        response.redirect("/");
+    });
 
 module.exports = router;

@@ -10,4 +10,8 @@ const routes = require("./routes/web");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(routes);
 
+app.use((request, response, next) => {
+    response.status(404).send("<h1>Page not found</h1>");
+});
+
 app.listen(3000);
