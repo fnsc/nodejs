@@ -1,68 +1,7 @@
 const http = require("http");
-const fileSystem = require("fs");
 
-const server = http.createServer((request, response) => {
-    const url = request.url;
-    const method = request.method;
+const routes = require("./routes");
 
-    if (url === "/") {
-        response.setHeader("Content-Type", "text/html");
-        response.write(
-            `<html>
-            <head>
-                <title>Form</title>
-            </head>
-            <body>
-                <form action='/message' method='POST'>
-                    <input type='text' name='message'>
-                    <button type='submit'>Send</button>
-                </form>
-            </body>
-            </html>`
-        );
-        return response.end();
-    }
-    if (url === "/message" && method === "POST") {
-        const body = [];
-
-        request.on("data", (chunk) => {
-            console.log(chunk);
-            body.push(chunk);
-        });
-
-        request.on("end", () => {
-            const parsedBody = Buffer.concat(body).toString();
-            const message = parsedBody.split("=")[1];
-            fileSystem.writeFileSync(
-                "message.txt",
-                `DUMMY text from section 3 => ${message}`
-            );
-        });
-
-        response.statusCode = 302;
-        response.setHeader("Location", "/");
-        return response.end();
-    }
-    /**
-     * Exits the request event loop.
-     */
-    // process.exit();
-
-    /**
-     * Send response block;
-     */
-    response.setHeader("Content-Type", "text/html");
-    response.write(
-        `<html>
-        <head>
-            <title>My first page</title>
-        </head>
-        <body>
-            <h1>My first page</h1>
-        </body>
-        </html>`
-    );
-    response.end();
-});
+const server = http.createServer(routes);
 
 server.listen(3000);
