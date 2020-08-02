@@ -1,0 +1,10 @@
+extends ../layouts/index.pug
+block title
+    title #{title}
+
+block content
+    form.product-form(action="/admin/products", method="POST")
+        .form-control
+            label(for="titleTitle")
+            input(type="text",name="title",id="title",placeholder="Type the title of the book")
+        button.btn(type="submit") Add Product

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        base(href="/")
+        meta(charset="utf-8")
+        meta(name="robots", content="all")
+        meta(name="googlebot", content="all")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0, shrink-to-fit=no")
+        meta(name="mobile-web-app-capable", content="yes")
+        meta(name="theme-color", content="#cdcdcd")
+        block title
+            title #{title}
+        link(rel="canonical", href="/")
+        link(href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800", rel="stylesheet")
+        link(rel="stylesheet", type="text/css" href="/css/app.css")
+
+    body
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__item-list
+                    li.main-header__item
+                        a(href="/", class=(uri === '/') ? 'active' : '') Shop
+
+                    li.main-header__item
+                        a(href="/admin/products/create", class=(uri === '/admin/products/create') ? 'active' : '') Add Product
+
+        main
+            block content
+
+        //- script(src="/js/app/js")
+
+
+
+

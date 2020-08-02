@@ -6,11 +6,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
+
+// Template Engine
+app.set("view engine", "pug");
+app.set("views", "resources/views");
+
 const routes = require("./routes/web");
 const rootDirectory = require("./utilities/path");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDirectory, "public")));
-app.use(routes);
+app.use(routes.routes);
 
 app.listen(3000);

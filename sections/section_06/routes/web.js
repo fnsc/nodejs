@@ -4,11 +4,15 @@ const router = express.Router();
 
 const rootDirectory = require("../utilities/path");
 
+const products = [];
+
 // Index
 router.get("/", (request, response, next) => {
-    response.sendFile(
-        path.join(rootDirectory, "resources", "views", "index.html")
-    );
+    response.render("./shop/index", {
+        products,
+        title: "Shop | Index",
+        uri: "/",
+    });
 });
 
 // Products
@@ -16,34 +20,20 @@ router
     .route("/admin/products")
     .get((request, response, next) => {})
     .post((request, response) => {
-        console.log(request.body);
+        products.push({ title: request.body.title });
         response.redirect("/");
     });
 router.get("/admin/products/create", (request, response, next) => {
-    response.sendFile(
-        path.join(
-            rootDirectory,
-            "resources",
-            "views",
-            "products",
-            "create.html"
-        )
-    );
+    response.render("./products/create", {
+        title: "Shop | Create Product",
+        uri: "/admin/products/create",
+    });
 });
 
 // Error Routes
 router.use((request, response, next) => {
-    response
-        .status(404)
-        .sendFile(
-            path.join(
-                rootDirectory,
-                "resources",
-                "views",
-                "error_pages",
-                "404.html"
-            )
-        );
+    response.status(404).render("./error_pages/404", { title: "Shop | 404" });
 });
 
-module.exports = router;
+exports.routes = router;
+exports.products = products;
